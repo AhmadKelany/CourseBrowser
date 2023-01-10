@@ -1,0 +1,56 @@
+﻿<Window x:Class="CourseBrowser.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CourseBrowser" 
+        xmlns:pan="clr-namespace:Panuon.UI;assembly=Panuon.UI"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" FontFamily="Gill Sans MT" RenderOptions.BitmapScalingMode="HighQuality" FontSize="24">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="333*"/>
+            <ColumnDefinition Width="67*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="29*"/>
+            <RowDefinition Height="188*"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+        <TextBox Margin="5" Name="txtPath" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        <Button Content="Browse" Grid.Column="1" Margin="5" Click="Button_Click"/>
+        <ListBox Grid.Row="1" Grid.ColumnSpan="2" Margin="5" Name="lst" ItemsSource="{Binding DataViewModel.Durations}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="480" />
+                            <ColumnDefinition Width="120" />
+                            <ColumnDefinition Width="60" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Margin="5" Text="{Binding FileName}" />
+                        <TextBlock Grid.Column="1" Margin="5" Text="{Binding Duration}" />
+                        <Image Grid.Column="2" Source="/done.png" Visibility="{Binding IsDone , Converter={StaticResource btv}}" Width="40" Height="40"/>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <pan:PUProgressBar Grid.Row="2" Grid.ColumnSpan="2" Percent="{Binding DataViewModel.DonePercent}" 
+                           CoverBrush="#FFA5FA67" Grid.RowSpan="2"   />
+        <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <TextBlock Text="Videos Count:" />
+            <TextBlock Text="{Binding DataViewModel.VideosCount}" Margin="5 0 50 0" />
+            <TextBlock Text="Total Duration:" />
+            <TextBlock Text="{Binding DataViewModel.TotalDurationString}"  Margin="5 0 0 0"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <TextBlock Text="Done:" />
+            <TextBlock Text="{Binding DataViewModel.DoneDurationString}" Margin="5 0 50 0" />
+            <TextBlock Text="Remaining:" />
+            <TextBlock Text="{Binding DataViewModel.RemainingDurationString}"  Margin="5 0 50 0"/>
+            <TextBlock Text="Done Percent:" />
+            <TextBlock Text="{Binding DataViewModel.DonePercent, StringFormat=P2}"  Margin="5 0 0 0"/>
+        </StackPanel>
+    </Grid>
+</Window>
